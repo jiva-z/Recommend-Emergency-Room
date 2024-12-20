@@ -21,7 +21,7 @@ BASE_PATH = './'
 
 def init_openai():
     try:
-        with open(os.path.join(BASE_PATH, 'module/api_key.txt'), 'r') as file:
+        with open(os.path.join(BASE_PATH, 'api_key.txt'), 'r') as file:
             api_key = file.read().strip()  # 일반 텍스트로 읽기
         client = OpenAI(api_key=api_key)
         return client
@@ -105,8 +105,6 @@ def summarize_text(client, input_text):
             "summary": summary_data.get("summary", "요약 없음"),
             "keywords": summary_data.get("keywords", [])
         }
-
-
     except json.JSONDecodeError:
         print(f"JSONDecodeError: 응답이 JSON 형식이 아님")
         return None
@@ -115,7 +113,7 @@ def summarize_text(client, input_text):
         return None
 
 def get_hospital_data():
-    return pd.read_csv(os.path.join(BASE_PATH, "module/emergency_data.csv"))
+    return pd.read_csv(os.path.join(BASE_PATH, "C:/Users/User/project7_api/emergency_data.csv"))
 
 def get_dist(start_lat, start_lng, dest_lat, dest_lng):
     #map_key.txt 에 있는 값으로 변경
@@ -284,6 +282,8 @@ def recommend_hospital(text, user_lat, user_lon,top_n):
     if not client:
         return None
     
+    # 응급 모델 로드
+    tokenizer, model, device = load_emergency_model()
     if not all([tokenizer, model, device]):
         return None
     
@@ -295,8 +295,6 @@ def recommend_hospital(text, user_lat, user_lon,top_n):
     if not summary_result:
         return None
     
-    # 응급 모델 로드
-    tokenizer, model, device = load_emergency_model()
     
     # 응급도 예측
     predicted_class, probabilities = predict_emergency(summary_result["keywords"], tokenizer, model, device)
@@ -316,10 +314,9 @@ def recommend_hospital(text, user_lat, user_lon,top_n):
       save_hospital_info_by_language(result,text)
       return result
     else:
-    # 빈 DataFrame 대신 새로운 DataFrame 생성
-      ment = '응급상황이 아닙니다.'
-      df = pd.DataFrame({'상태': [ment]})
-      df.to_csv(BASE_PATH + 'module/hospital_recommendations.csv', index=False, encoding='utf-8-sig')
-      print("병원 추천이 필요없습니다.")
-    
+        return {
+            "summary": summary_result,
+            "emergency_class": predicted_class + 1,
+            "message": "응급상황이 아닙니다."
+        }
 
