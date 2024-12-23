@@ -1,6 +1,6 @@
 package com.aivle.mini7.service;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.aivle.mini7.config.OpenAIConfig;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -9,18 +9,19 @@ import java.util.Map;
 @Service
 public class OpenAIService {
 
-    @Value("${hospital.api.host}") // FastAPI 서버 URL
-    private String fastApiUrl;
+    private final OpenAIConfig config;
+    private final RestTemplate restTemplate;
 
-    @Value("${openai.api.key.file}") // OpenAI API 키 파일 경로
-    private String apiKeyFilePath;
+    // OpenAIConfig와 RestTemplate을 생성자로 주입받음
+    public OpenAIService(OpenAIConfig config, RestTemplate restTemplate) {
+        this.config = config;
+        this.restTemplate = restTemplate;
+    }
 
     public Map<String, Object> callOpenAI() {
         // FastAPI의 /openai 엔드포인트 URL
-        String url = fastApiUrl + "/openai";
+        String url = config.getFastApiUrl() + "/openai";
 
-        // RestTemplate을 사용하여 FastAPI 호출
-        RestTemplate restTemplate = new RestTemplate();
         try {
             // FastAPI 호출 및 응답 받기
             Map<String, Object> response = restTemplate.getForObject(url, Map.class);
