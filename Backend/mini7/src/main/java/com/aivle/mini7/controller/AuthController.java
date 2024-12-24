@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/auth")
 public class AuthController {
     
     // 이게 진짜 유저 컨트롤러
@@ -22,7 +22,7 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/register")
     public ResponseEntity<RegisterResponse> signup(@Valid @RequestBody RegisterRequest request) {
         userService.registerUser(request);
         return ResponseEntity.ok(new RegisterResponse("회원가입 성공"));
