@@ -11,6 +11,8 @@ import java.util.List;
 @RequestMapping("/hospital/users")
 public class UserController {
 
+    // DB 사용자 조회 및 생성 테스트를 위한 UserController.
+
     @Autowired
     private UserRepository userRepository;
 
