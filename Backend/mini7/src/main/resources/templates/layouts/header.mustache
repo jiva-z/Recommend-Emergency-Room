@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>응급 상황 설명</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+            font-size: 18px; /* 기본 글자 크기 추가 확대 */
+        }
+        header {
+            width: 100%;
+            background-color: #ffffff;
+            padding: 30px 20px; /* 헤더 패딩 확대 */
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-right: 40px;
+        }
+        header img {
+            height: 70px; /* 이미지 크기 추가 확대 */
+        }
+        .header-buttons {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            display: flex;
+            gap: 20px; /* 버튼 간격 확대 */
+            align-items: center;
+        }
+        .header-buttons button {
+            background-color: transparent;
+            color: #333;
+            font-size: 20px; /* 버튼 글자 크기 추가 확대 */
+            padding: 15px 25px; /* 버튼 패딩 확대 */
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .header-buttons button:hover {
+            background-color: #f0f0f0;
+            color: #000;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            padding: 10px 20px; /* 검색바 패딩 확대 */
+            background-color: #fff;
+            gap: 15px; /* 검색창 내부 간격 확대 */
+        }
+        .search-bar input {
+            border: none;
+            outline: none;
+            width: 240px; /* 검색창 너비 확대 */
+            font-size: 20px; /* 검색창 글자 크기 추가 확대 */
+        }
+        .search-bar button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        .search-bar button img {
+            width: 24px;
+            height: 24px; /* 아이콘 크기 확대 */
+        }
+        .header-left img {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 350px; /* 이미지 크기 추가 확대 */
+            height: auto;
+        }
+        .header-center img {
+            width: 350px; /* 이미지 크기 추가 확대 */
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <img src="/images/img4.png" alt="Slogan Image">
+    </div>
+    <div class="header-center">
+        <img src="/images/img3.png" alt="KakaoTalk Image">
+    </div>
+    <div class="header-buttons">
+        <div class="search-bar">
+            <input type="text" placeholder="검색어를 입력하세요">
+            <button>
+                <img src="/images/img5.png" alt="검색 아이콘">
+            </button>
+        </div>
+        <button onclick="location.href='#'">마이 페이지</button>
+        <form action="/logout" method="GET">
+            <button type="submit">로그아웃</button>
+        </form>
+    </div>
+</header>
