@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>응급실 찾기</title>
+    <style>
+        :root {
+            --primary-blue: #005baa;
+            --secondary-blue: #0056b3;
+            --white: #ffffff;
+            --gray-light: #f8f9fa;
+            --border-color: #e1e4e8;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--white);
+        }
+        /* 상단 배경 컨테이너 추가 */
+        .background-container {
+            background-color: var(--primary-blue);
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 300px;  /* 파란색 배경 높이 */
+            z-index: -1;
+        }
+        /* 헤더 스타일 */
+        header {
+            background: var(--primary-blue);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        .header-content {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        .header-content img {
+            width: 150px;  /* 아이콘 크기 증가 */
+            height: 150px;  /* 아이콘 크기 증가 */
+            object-fit: contain;  /* 이미지 비율 유지 */
+        }
+
+        .logo-container img {
+            height: 60px;  /* 로고 높이 증가 */
+            width: auto;   /* 비율 유지를 위해 자동 설정 */
+            object-fit: contain;  /* 이미지 비율 유지 */
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* 메인 컨텐츠 */
+        .main-visual {
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 0;
+            background: transparent;  /* 그라데이션 제거 */
+        }
+
+        .main-visual h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-section {
+            max-width: 800px;
+            margin: 20px auto;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        textarea, input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        button[type="submit"] {
+            background: var(--secondary-blue);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+
+        /* 푸터 스타일 */
+        footer {
+            background: var(--white);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .foot_div2 {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .foot_div2 a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .input-group {
+                grid-template-columns: 1fr;
+            }
+
+            .main-visual h1 {
+                font-size: 2rem;
+            }
+
+            .search-section {
+                margin: 0 1rem;
+                padding: 1.5rem;
+            }
+        }
+         /* 퀵메뉴 스타일 추가 */
+        .quick-menu {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #fff;
+            border-radius: 10px 0 0 10px;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 15px 0;
+            width: 80px;  /* 퀵메뉴 너비 고정 */
+        }
+
+        .quick-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .quick-menu li {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .quick-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .quick-menu a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .quick-menu img {
+            width: 32px;  /* 이미지 너비 고정 */
+            height: 32px;  /* 이미지 높이 고정 */
+            object-fit: contain;  /* 이미지 비율 유지 */
+            margin-bottom: 8px;
+        }
+        .quick-menu span {
+            display: block;
+            font-size: 13px;
+            text-align: center;
+            word-break: keep-all;  /* 텍스트 줄바꿈 방지 */
+        }
+
+        .quick-menu .active {
+            color: #005baa;
+        }
+
+        .quick-menu li:hover a {
+            color: #005baa;
+        }
+
+        /* 섹션 스타일 */
+        .section {
+            padding: 50px 0;
+            min-height: 100vh;
+            scroll-margin-top: 60px; /* 헤더 높이만큼 여백 추가 */
+}
+
+        }
+    </style>
+</head>
+<body>
+<div class="background-container"></div>
+<header>
+    <div class="header-content">
+        <div class="logo-container">
+            <img src="/images/img4.png" alt="AIVLE Logo">
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-button">마이페이지</button>
+            <button class="nav-button">로그아웃</button>
+        </div>
+    </div>
+</header>
+<div id="main" class="section">
+    <div class="main-visual">
+        <h1>응급실 찾기</h1>
+        <p>가장 가까운 응급실을 빠르게 찾아드립니다</p>
+    </div>
+
+    <div class="search-section">
+        <form action="/hospital/recommend_hospital" method="Post">
+            <div class="form-group">
+                <label for="text">상황 메시지 (필수)</label>
+                <textarea id="text" name="text" placeholder="증상을 자세히 설명해주세요"></textarea>
+            </div>
+            <div class="input-group">
+                <div class="form-group">
+                    <label for="latitude">위도</label>
+                    <input type="text" id="latitude" name="latitude" placeholder="위도를 입력해주세요">
+                </div>
+                <div class="form-group">
+                    <label for="longitude">경도</label>
+                    <input type="text" id="longitude" name="longitude" placeholder="경도를 입력해주세요">
+                </div>
+                <div class="form-group">
+                    <label for="count">추천 응급실 수</label>
+                    <input type="text" id="count" name="count" placeholder="응급실 개수를 입력해주세요">
+                </div>
+            </div>
+            <p class="example">예시: 서울시청 - 위도: 37.571513, 경도: 126.734086</p>
+            <button type="submit">응급실 찾기</button>
+        </form>
+    </div>
+</div>
+
+<!-- 게시판 섹션 -->
+<div id="list" class="section">
+    <div class="board-container">
+        <h2 class="board-title">응급실 이용 후기</h2>
+
+        <!-- 게시판 검색 및 필터 -->
+        <div class="board-header">
+            <div class="board-search">
+                <select>
+                    <option>전체</option>
+                    <option>제목</option>
+                    <option>내용</option>
+                    <option>작성자</option>
+                </select>
+                <input type="text" placeholder="검색어를 입력하세요">
+                <button>검색</button>
+            </div>
+            <button class="write-btn">글쓰기</button>
+        </div>
+
+        <!-- 게시판 목록 -->
+        <table class="board-table">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>작성일</th>
+                <th>조회</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>5</td>
+                <td>신속한 응급실 찾기 서비스 덕분에 큰 도움 받았습니다</td>
+                <td>김*민</td>
+                <td>2024-12-24</td>
+                <td>45</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>응급실 도착 시간 정보가 정확해요</td>
+                <td>이*준</td>
+                <td>2024-12-23</td>
+                <td>38</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>위치 기반 추천 시스템이 편리합니다</td>
+                <td>박*현</td>
+                <td>2024-12-22</td>
+                <td>52</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- 페이지네이션 -->
+        <div class="pagination">
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#">다음 ></a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* 게시판 섹션 스타일 */
+    #list {
+        background-color: #f8f9fa;
+        padding: 60px 0;
+    }
+
+    .board-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .board-title {
+        font-size: 28px;
+        color: #0056b3;
+        margin-bottom: 30px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .board-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .board-search.board-search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .board-search select {
+        width: 120px;
+        height: 40px;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .board-search input {
+        height: 40px;  /* 25px에서 40px로 수정 */
+        padding: 0 12px;  /* 패딩 값 조정 */
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        flex: 1;
+        box-sizing: border-box;  /* 패딩을 높이에 포함 */
+    }
+
+    .board-search {
+        display: flex;
+        align-items: center;  /* 세로 중앙 정렬 */
+        gap: 10px;
+        height: 40px;  /* 전체 높이 통일 */
+    }
+
+    .board-search button,
+    .board-search select,
+    .write-btn {
+        height: 40px;  /* 모든 요소 높이 통일 */
+        line-height: 40px;  /* 텍스트 세로 중앙 정렬 */
+        box-sizing: border-box;
+    }
+
+    .board-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        text-align: center;  /* 전체 테이블 중앙 정렬 기본값 설정 */
+    }
+
+    .board-table th {
+        background-color: #f8f9fa;
+        padding: 15px;
+        font-weight: 600;
+        border-top: 2px solid #0056b3;
+        border-bottom: 1px solid #ddd;
+        text-align: center;  /* 헤더 중앙 정렬 */
+    }
+
+    .board-table td {
+        padding: 18px 15px;
+        border-bottom: 1px solid #eee;
+        text-align: center;  /* 데이터 중앙 정렬 */
+    }
+
+    /* 제목 열만 좌측 정렬 */
+    .board-table td:nth-child(2) {
+        text-align: left;
+    }
+
+    /* 각 열의 너비 조정 */
+    .board-table th:nth-child(1) { width: 8%; }   /* 번호 */
+    .board-table th:nth-child(2) { width: 45%; }  /* 제목 */
+    .board-table th:nth-child(3) { width: 15%; }  /* 작성자 */
+    .board-table th:nth-child(4) { width: 20%; }  /* 작성일 */
+    .board-table th:nth-child(5) { width: 12%; }  /* 조회 */
+
+    .board-table tr:hover {
+        background-color: #f5f9ff;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 40px;
+    }
+
+    .pagination a {
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        color: #555;
+        text-decoration: none;
+    }
+
+    .pagination a.active {
+        background-color: #0056b3;
+        color: white;
+        border-color: #0056b3;
+    }
+
+</style>
+
+
+<!-- 건강정보 섹션 -->
+<div id="health" class="section health-section">
+    <h2 class="section-title">건강정보</h2>
+
+    <div class="health-grid">
+        <!-- 응급처치 정보 카드들 -->
+        <div class="health-card">
+            <div class="card-image">
+                <img src="/images/health/수동.jpg" alt="수동운동">
+                <div class="card-tag">응급처치</div>
+            </div>
+            <div class="card-content">
+                <h3>마비환자 및 주보호자를 위한 재활 운동 [수동운동]</h3>
+                <p>응급 상황 발생시 올바른 대처방법 안내</p>
+                <a href="https://www.youtube.com/watch?v=RQLT9Gx_G2A" class="watch-link">영상보기</a>
+            </div>
+        </div>
+
+        <div class="health-card">
+            <div class="card-image">
+                <img src="/images/health/능동.jpg" alt="능동운동">
+                <div class="card-tag">응급처치</div>
+            </div>
+            <div class="card-content">
+                <h3>마비환자 및 주보호자를 위한 재활 운동 [능동운동]</h3>
+                <p>올바른 호흡법과 대처방안</p>
+                <a href="https://www.youtube.com/watch?v=x2DZBSb_vpY" class="watch-link">영상보기</a>
+            </div>
+        </div>
+
+        <div class="health-card">
+            <div class="card-image">
+                <img src="/images/health/저항.jpg" alt="저항운동">
+                <div class="card-tag">응급처치</div>
+            </div>
+            <div class="card-content">
+                <h3>마비환자 및 주보호자를 위한 재활 운동 [저항운동]</h3>
+                <p>기본적인 응급처치 방법 안내</p>
+                <a href="https://www.youtube.com/watch?v=WLjIOeoQMOY" class="watch-link">영상보기</a>
+            </div>
+        </div>
+
+        <div class="health-card">
+            <div class="card-image">
+                <img src="/images/health/기능.jpg" alt="기능적운동">
+                <div class="card-tag">안전수칙</div>
+            </div>
+            <div class="card-content">
+                <h3>마비환자 및 주보호자를 위한 재활 운동 [기능적운동]</h3>
+                <p>응급실 내원시 주의사항</p>
+                <a href="https://www.youtube.com/watch?v=p7D4HMt3ZIE" class="watch-link">영상보기</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .health-section {
+        background-color: #e6f0ff;  /* 더 진한 하늘색으로 변경 */
+        padding: 60px 0;
+    }
+
+    .section-title {
+        color: #0056b3;
+        font-size: 28px;
+        text-align: center;
+        margin-bottom: 40px;
+        font-weight: 600;
+    }
+
+    .health-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .health-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);  /* 그림자도 약간 더 진하게 */
+    }
+
+    .card-image {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;  /* 16:9 비율 유지 */
+    }
+
+    .card-image img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;  /* 이미지 비율 유지 */
+    }
+
+    .card-content {
+        padding: 20px;
+    }
+
+    .card-content h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .card-content p {
+        color: #666;
+        margin-bottom: 15px;
+    }
+
+    .watch-link {
+        display: inline-block;
+        color: #0056b3;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    /* 반응형 처리 */
+    @media (max-width: 1200px) {
+        .health-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .health-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .health-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+</style>
+
+
+<div id="notice" class="section notice-section">
+    <h2 class="section-title">공지사항</h2>
+    <div class="notice-container">
+        <!-- 왼쪽 공지사항 목록 -->
+        <div class="notice-list">
+            <ul>
+                <li>
+                    <a href="#" class="notice-item">
+                        <span class="title">2024년 응급실 추천 서비스 개선 안내</span>
+                        <span class="date">2024-12-11</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="notice-item">
+                        <span class="title">개인정보처리방침 개정 관련 안내</span>
+                        <span class="date">2024-11-28</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="notice-item">
+                        <span class="title">응급실 추천 서비스 이용 가이드</span>
+                        <span class="date">2024-10-02</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="notice-item">
+                        <span class="title">응급실 추천 서비스 개수 개선 안내</span>
+                        <span class="date">2024-07-17</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 오른쪽 배너/이미지 영역 -->
+        <div class="notice-banner">
+            <div class="banner-slide">
+                <img src="/images/img2.png" alt="응급실 이용 가이드">
+                <div class="banner-content">
+                    <h3>응급실 예약 검사비 환불 안내</h3>
+                    <button class="detail-btn">자세히 보기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .notice-section {
+        background-color: #fff1f5;  /* 연한 핑크색 배경 */
+        padding: 60px 0;
+    }
+
+    .notice-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        gap: 40px;
+        padding: 0 40px;
+    }
+
+    .notice-list {
+        flex: 1;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .notice-list ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .notice-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 0;  /* 패딩 증가 */
+        border-bottom: 1px solid #eee;
+        text-decoration: none;
+        color: #333;
+        font-size: 16px;  /* 폰트 크기 증가 */
+    }
+
+
+
+    .notice-item:hover {
+        color: #0056b3;
+    }
+
+    .notice-item .title {
+        flex: 1;
+    }
+
+    .notice-item .date {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .notice-banner {
+        width: 500px;  /* 배너 너비 */
+        position: relative;  /* 포지셔닝 컨텍스트 설정 */
+        border-radius: 12px;
+        overflow: hidden;  /* 이미지가 영역을 벗어나지 않도록 */
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .banner-slide {
+        position: relative;
+        width: 100%;
+        height: 400px;  /* 배너 높이 */
+    }
+
+    .banner-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;  /* 이미지 비율 유지하며 영역 채우기 */
+    }
+
+    .banner-content {
+        position: absolute;  /* 절대 위치 설정 */
+        bottom: 0;          /* 하단에 고정 */
+        left: 0;
+        right: 0;
+        padding: 30px;
+        background: linear-gradient(transparent, rgba(0,0,0,0.8));  /* 그라데이션 배경 */
+        color: white;
+    }
+
+    .banner-content h3 {
+        margin: 0 0 15px 0;
+        font-size: 24px;
+    }
+
+    .detail-btn {
+        background: white;
+        color: #0056b3;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .detail-btn:hover {
+        background: #f0f0f0;
+    }
+
+
+    @media (max-width: 768px) {
+        .notice-container {
+            flex-direction: column;
+        }
+
+        .notice-banner {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="quick-menu">
+    <ul>
+        <li><a href="#main" class="active">
+            <img src="/images/icons/search.png" alt="메인">
+            <span>메인</span>
+        </a></li>
+        <li><a href="#list">
+            <img src="/images/icons/list.png" alt="게시판">
+            <span>게시판</span>
+        </a></li>
+        <li><a href="#health">
+            <img src="/images/icons/health.png" alt="건강">
+            <span>건강정보</span>
+        </a></li>
+        <li><a href="#notice">
+            <img src="/images/icons/notice.png" alt="공지">
+            <span>공지사항</span>
+        </a></li>
+    </ul>
+</div>
+<footer>
+    <div class="foot_div1">
+        © 2024 Emergency Assist Platform. All rights reserved.
+    </div>
+    <div class="foot_div2">
+        <a href="#" class="modal-trigger" data-modal="privacy-modal">개인정보처리방침</a>
+        <a href="#" class="modal-trigger" data-modal="terms-modal">이용약관</a>
+        <a href="#" class="modal-trigger" data-modal="support-modal">고객센터</a>
+        <a href="#" class="modal-trigger" data-modal="inquire-modal">문의하기</a>
+    </div>
+</footer>
+<!-- 스크롤 기능을 위한 JavaScript 추가 -->
+<script>
+    document.querySelectorAll('.quick-menu a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // 모든 메뉴에서 active 클래스 제거
+            document.querySelectorAll('.quick-menu a').forEach(a => {
+                a.classList.remove('active');
+            });
+
+            // 클릭된 메뉴에 active 클래스 추가
+            this.classList.add('active');
+
+            // 해당 섹션으로 스크롤
+            const targetId = this.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+
+    // 스크롤 시 현재 섹션에 따라 메뉴 활성화
+    window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('[id]'); // ID가 있는 모든 요소 선택
+        const quickLinks = document.querySelectorAll('.quick-menu a');
+
+        let current = '';
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 60) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        quickLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').substring(1) === current) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+</body>
+</html>

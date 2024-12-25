@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>응급연계 서비스 로그인</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+        }
+        .left {
+            flex: 1.4; /* 왼쪽 영역 비율 */
+            background: url('/images/img2.png') no-repeat center center;
+            background-size: cover;
+        }
+        .right {
+            flex: 0.6; /* 오른쪽 영역 비율 */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 40px;
+        }
+        .container {
+            width: 100%;
+            max-width: 450px; /* 오른쪽 컴포넌트의 최대 너비 설정 */
+            text-align: center;
+            margin-top: 150px;
+        }
+        .logo {
+            margin-bottom: 10px;
+        }
+        .logo img {
+            width: 320px;
+        }
+        h1 {
+            margin: 0 0 10px;
+            font-size: 45px;
+            color: #333;
+            margin-top: 65px;
+        }
+        .form {
+            width: 100%;
+        }
+        .form input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-top:50px;
+        }
+
+        .form input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-top:5px;
+        }
+
+        .form button {
+            width: 108%;
+            padding: 15px;
+            background-color: #4A90E2;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            margin-top:40px;
+        }
+        .form button:hover {
+            background-color: #357ABD;
+        }
+        .links {
+            font-size: 14px;
+            color: #4A90E2;
+        }
+        .links a {
+            color: #4A90E2;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        hr {
+            width: 108%;
+        }
+        .links2 a {
+            color: brown;
+            font-size: 13px;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="left"></div>
+    <div class="right">
+        <div class="container">
+            <div class="logo">
+                <img src="/images/img3.png" alt="보건복지부 로고">
+            </div>
+            <h1>응급연계 서비스</h1>
+            <form class="form">
+                <input type="text" placeholder="아이디" required>
+                <input type="password" placeholder="비밀번호" required>
+                <button type="submit">로그인</button>
+            </form>
+            <div class="links">
+                <a href="#">아이디 찾기</a> | <a href="#">비밀번호 찾기</a> | <a href="#">회원가입</a>
+            </div>
+        </div>
+        <br><br><br>
+        <hr>
+        <br>
+        <div class="links2">
+            <a href="#">이용 약관</a>
+            <a href="#">개인정보 처리방침</a>
+            <a href="#">운영정책</a>
+            <a href="#">고객 센터</a>
+            <a href="#">공지사항</a>
+        </div>
+    </div>
+</body>
+</html>
