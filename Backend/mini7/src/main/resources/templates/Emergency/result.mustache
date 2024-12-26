@@ -490,8 +490,8 @@
             <div class="search-bar">
                 <input type="text" placeholder="검색어를 입력하세요">
             </div>
-            <button onclick="location.href='mypage.html'">마이 페이지</button>
-            <button onclick="location.href='login3.html'">로그아웃</button>
+            <button onclick="location.href='mypage.mustache'">마이 페이지</button>
+            <button onclick="location.href='logout.mustache'">로그아웃</button>
         </div>
     </div>
     <div class="background-container"></div>
@@ -515,6 +515,7 @@
                 <input type="text" id="predicted-class" value="{{predictedClass}}" readonly>
             </div>
         </div>
+        <button onclick="location.href='/re_input'">다시하기</button>
 
         {{#message}}
         <div class="alert">
