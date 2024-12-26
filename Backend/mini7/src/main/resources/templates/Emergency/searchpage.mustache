@@ -1,262 +1,197 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>응급실 찾기</title>
-    <style>
-        :root {
-            --primary-blue: #005baa;
-            --secondary-blue: #0056b3;
-            --white: #ffffff;
-            --gray-light: #f8f9fa;
-            --border-color: #e1e4e8;
-        }
+<style>
+    :root {
+        --primary-blue: #005baa;
+        --secondary-blue: #0056b3;
+        --white: #ffffff;
+        --gray-light: #f8f9fa;
+        --border-color: #e1e4e8;
+    }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background-color: var(--white);
-        }
-        /* 상단 배경 컨테이너 추가 */
-        .background-container {
-            background-color: var(--primary-blue);
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 300px;  /* 파란색 배경 높이 */
-            z-index: -1;
-        }
-        /* 헤더 스타일 */
-        header {
-            background: var(--primary-blue);
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background-color: var(--white);
+    }
+    /* 상단 배경 컨테이너 추가 */
+    .background-container {
+        background-color: var(--primary-blue);
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 300px;  /* 파란색 배경 높이 */
+        z-index: -1;
+    }
+    /* 메인 컨텐츠 */
+    .main-visual {
+        color: var(--white);
+        padding: 2rem;
+        text-align: center;
+        margin-top: 0;
+        background: transparent;  /* 그라데이션 제거 */
+    }
 
+    .main-visual h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
 
-        .header-content {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+    .search-section {
+        max-width: 800px;
+        margin: 20px auto;
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        position: relative;
+    }
 
-        }
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
 
-        .header-content img {
-            width: 150px;  /* 아이콘 크기 증가 */
-            height: 150px;  /* 아이콘 크기 증가 */
-            object-fit: contain;  /* 이미지 비율 유지 */
-        }
+    label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
 
-        .logo-container img {
-            height: 60px;  /* 로고 높이 증가 */
-            width: auto;   /* 비율 유지를 위해 자동 설정 */
-            object-fit: contain;  /* 이미지 비율 유지 */
-        }
+    textarea, input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        margin-bottom: 1rem;
+    }
 
-        .nav-buttons {
-            display: flex;
-            gap: 1rem;
-        }
+    textarea {
+        height: 150px;
+        resize: vertical;
+    }
 
-        .nav-button {
-            background: transparent;
-            color: var(--white);
-            border: 1px solid var(--white);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+    .input-group {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
 
-        /* 메인 컨텐츠 */
-        .main-visual {
-            color: var(--white);
-            padding: 2rem;
-            text-align: center;
-            margin-top: 0;
-            background: transparent;  /* 그라데이션 제거 */
+    button[type="submit"] {
+        background: var(--secondary-blue);
+        color: var(--white);
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 1.1rem;
+    }
+
+    /* 푸터 스타일 */
+    footer {
+        background: var(--white);
+        padding: 2rem;
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .foot_div2 {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-top: 1rem;
+    }
+
+    .foot_div2 a {
+        color: var(--primary-blue);
+        text-decoration: none;
+    }
+
+    /* 반응형 디자인 */
+    @media (max-width: 768px) {
+        .input-group {
+            grid-template-columns: 1fr;
         }
 
         .main-visual h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2rem;
         }
 
         .search-section {
-            max-width: 800px;
-            margin: 20px auto;
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: relative;
+            margin: 0 1rem;
+            padding: 1.5rem;
         }
+    }
+     /* 퀵메뉴 스타일 추가 */
+    .quick-menu {
+        position: fixed;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #fff;
+        border-radius: 10px 0 0 10px;
+        box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+        z-index: 1000;
+        padding: 15px 0;
+        width: 80px;  /* 퀵메뉴 너비 고정 */
+    }
 
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
+    .quick-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
 
-        label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-        }
+    .quick-menu li {
+        margin-bottom: 15px;
+        text-align: center;
+    }
 
-        textarea, input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            margin-bottom: 1rem;
-        }
+    .quick-menu li:last-child {
+        border-bottom: none;
+    }
 
-        textarea {
-            height: 150px;
-            resize: vertical;
-        }
+    .quick-menu a {
+        text-decoration: none;
+        color: #333;
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
 
-        .input-group {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
+    .quick-menu img {
+        width: 32px;  /* 이미지 너비 고정 */
+        height: 32px;  /* 이미지 높이 고정 */
+        object-fit: contain;  /* 이미지 비율 유지 */
+        margin-bottom: 8px;
+    }
+    .quick-menu span {
+        display: block;
+        font-size: 13px;
+        text-align: center;
+        word-break: keep-all;  /* 텍스트 줄바꿈 방지 */
+    }
 
-        button[type="submit"] {
-            background: var(--secondary-blue);
-            color: var(--white);
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1.1rem;
-        }
+    .quick-menu .active {
+        color: #005baa;
+    }
 
-        /* 푸터 스타일 */
-        footer {
-            background: var(--white);
-            padding: 2rem;
-            text-align: center;
-            margin-top: 2rem;
-        }
+    .quick-menu li:hover a {
+        color: #005baa;
+    }
 
-        .foot_div2 {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1rem;
-        }
-
-        .foot_div2 a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-
-        /* 반응형 디자인 */
-        @media (max-width: 768px) {
-            .input-group {
-                grid-template-columns: 1fr;
-            }
-
-            .main-visual h1 {
-                font-size: 2rem;
-            }
-
-            .search-section {
-                margin: 0 1rem;
-                padding: 1.5rem;
-            }
-        }
-         /* 퀵메뉴 스타일 추가 */
-        .quick-menu {
-            position: fixed;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #fff;
-            border-radius: 10px 0 0 10px;
-            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-            z-index: 1000;
-            padding: 15px 0;
-            width: 80px;  /* 퀵메뉴 너비 고정 */
-        }
-
-        .quick-menu ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .quick-menu li {
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .quick-menu li:last-child {
-            border-bottom: none;
-        }
-
-        .quick-menu a {
-            text-decoration: none;
-            color: #333;
-            font-size: 14px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .quick-menu img {
-            width: 32px;  /* 이미지 너비 고정 */
-            height: 32px;  /* 이미지 높이 고정 */
-            object-fit: contain;  /* 이미지 비율 유지 */
-            margin-bottom: 8px;
-        }
-        .quick-menu span {
-            display: block;
-            font-size: 13px;
-            text-align: center;
-            word-break: keep-all;  /* 텍스트 줄바꿈 방지 */
-        }
-
-        .quick-menu .active {
-            color: #005baa;
-        }
-
-        .quick-menu li:hover a {
-            color: #005baa;
-        }
-
-        /* 섹션 스타일 */
-        .section {
-            padding: 50px 0;
-            min-height: 100vh;
-            scroll-margin-top: 60px; /* 헤더 높이만큼 여백 추가 */
-}
-
-        }
-    </style>
-</head>
+    /* 섹션 스타일 */
+    .section {
+        padding: 50px 0;
+        min-height: 100vh;
+        scroll-margin-top: 60px; /* 헤더 높이만큼 여백 추가 */
+    }
+</style>
 <body>
 <div class="background-container"></div>
-<header>
-    <div class="header-content">
-        <div class="logo-container">
-            <img src="/images/img4.png" alt="AIVLE Logo">
-        </div>
-        <div class="nav-buttons">
-            <button class="nav-button">마이페이지</button>
-            <button class="nav-button">로그아웃</button>
-        </div>
-    </div>
-</header>
+{{>layouts/header}}
 <div id="main" class="section">
     <div class="main-visual">
         <h1>응급실 찾기</h1>
@@ -503,7 +438,7 @@
             <div class="card-content">
                 <h3>마비환자 및 주보호자를 위한 재활 운동 [수동운동]</h3>
                 <p>응급 상황 발생시 올바른 대처방법 안내</p>
-                <a href="https://www.youtube.com/watch?v=RQLT9Gx_G2A" class="watch-link">영상보기</a>
+                <a href="https://www.youtube.com/watch?v=RQLT9Gx_G2A" class="watch-link" target="_blank">영상보기</a>
             </div>
         </div>
 
@@ -515,7 +450,7 @@
             <div class="card-content">
                 <h3>마비환자 및 주보호자를 위한 재활 운동 [능동운동]</h3>
                 <p>올바른 호흡법과 대처방안</p>
-                <a href="https://www.youtube.com/watch?v=x2DZBSb_vpY" class="watch-link">영상보기</a>
+                <a href="https://www.youtube.com/watch?v=x2DZBSb_vpY" class="watch-link" target="_blank">영상보기</a>
             </div>
         </div>
 
@@ -527,7 +462,7 @@
             <div class="card-content">
                 <h3>마비환자 및 주보호자를 위한 재활 운동 [저항운동]</h3>
                 <p>기본적인 응급처치 방법 안내</p>
-                <a href="https://www.youtube.com/watch?v=WLjIOeoQMOY" class="watch-link">영상보기</a>
+                <a href="https://www.youtube.com/watch?v=WLjIOeoQMOY" class="watch-link" target="_blank">영상보기</a>
             </div>
         </div>
 
@@ -539,7 +474,7 @@
             <div class="card-content">
                 <h3>마비환자 및 주보호자를 위한 재활 운동 [기능적운동]</h3>
                 <p>응급실 내원시 주의사항</p>
-                <a href="https://www.youtube.com/watch?v=p7D4HMt3ZIE" class="watch-link">영상보기</a>
+                <a href="https://www.youtube.com/watch?v=p7D4HMt3ZIE" class="watch-link" target="_blank">영상보기</a>
             </div>
         </div>
     </div>
@@ -814,17 +749,7 @@
         </a></li>
     </ul>
 </div>
-<footer>
-    <div class="foot_div1">
-        © 2024 Emergency Assist Platform. All rights reserved.
-    </div>
-    <div class="foot_div2">
-        <a href="#" class="modal-trigger" data-modal="privacy-modal">개인정보처리방침</a>
-        <a href="#" class="modal-trigger" data-modal="terms-modal">이용약관</a>
-        <a href="#" class="modal-trigger" data-modal="support-modal">고객센터</a>
-        <a href="#" class="modal-trigger" data-modal="inquire-modal">문의하기</a>
-    </div>
-</footer>
+{{>layouts/footer}}
 <!-- 스크롤 기능을 위한 JavaScript 추가 -->
 <script>
     document.querySelectorAll('.quick-menu a').forEach(anchor => {

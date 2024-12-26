@@ -9,11 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class loginController {
 
-    @GetMapping("/logout")
-    public String loginPage() {
-        return "Emergency/login"; // login.mustache
-    }
-
-//    @PostMapping("/login")
-//    public
+//    @GetMapping("/logout")
+//    public String loginPage() {
+//        return "Emergency/login";
+//    }
 }

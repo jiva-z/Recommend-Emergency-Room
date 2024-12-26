@@ -68,6 +68,7 @@ public class indexController {
                 model.addAttribute("message", response.get("message"));
             }
 
+
             return "Emergency/result";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -78,5 +79,26 @@ public class indexController {
     @GetMapping("/re_input")
     public String reInput() {
         return "redirect:/";
+    }
+
+
+    @GetMapping("/hospital/mypage")
+    public String mypage(){
+        return "Emergency/mypage";
+    }
+
+    @GetMapping("/mypage")
+    public String mypage1(){
+        return "Emergency/mypage";
+    }
+
+    @GetMapping("/login")
+    public String loginPage1() {
+        return "Emergency/login";
+    }
+
+    @GetMapping("/hospital/logout")
+    public String loginPage() {
+        return "Emergency/login";
     }
 }
