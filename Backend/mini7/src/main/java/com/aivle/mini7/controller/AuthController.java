@@ -1,5 +1,7 @@
 package com.aivle.mini7.controller;
 
+import com.aivle.mini7.client.dto.LoginRequest;
+import com.aivle.mini7.client.dto.LoginResponse;
 import com.aivle.mini7.client.dto.RegisterRequest;
 import com.aivle.mini7.client.dto.RegisterResponse;
 import com.aivle.mini7.service.UserService;
@@ -26,5 +28,11 @@ public class AuthController {
     public ResponseEntity<RegisterResponse> signup(@Valid @RequestBody RegisterRequest request) {
         userService.registerUser(request);
         return ResponseEntity.ok(new RegisterResponse("회원가입 성공"));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+        LoginResponse response = userService.loginUser(request.getUserId(), request.getPassword());
+        return ResponseEntity.ok(response);
     }
 }
