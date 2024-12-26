@@ -26,13 +26,29 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> signup(@Valid @RequestBody RegisterRequest request) {
-        userService.registerUser(request);
-        return ResponseEntity.ok(new RegisterResponse("회원가입 성공"));
+        try {
+            userService.registerUser(request);
+            return ResponseEntity.ok(new RegisterResponse("회원가입 성공"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new RegisterResponse(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(new RegisterResponse("회원가입 처리 중 오류가 발생했습니다."));
+        }
     }
 
+
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
-        LoginResponse response = userService.loginUser(request.getUserId(), request.getPassword());
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
+        try {
+            LoginResponse response = userService.loginUser(request.getUserId(), request.getPassword());
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new LoginResponse(e.getMessage(), null));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(new LoginResponse("로그인 처리 중 오류가 발생했습니다.", null));
+        }
     }
+
+
+
 }
