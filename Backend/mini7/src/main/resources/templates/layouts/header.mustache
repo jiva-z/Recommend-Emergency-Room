@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>응급실 찾기</title>
+    <style>
+        /* 헤더 스타일 */
+        header {
+            background: var(--primary-blue);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        .header-content {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        .header-content img {
+            width: 150px;  /* 아이콘 크기 증가 */
+            height: 150px;  /* 아이콘 크기 증가 */
+            object-fit: contain;  /* 이미지 비율 유지 */
+        }
+
+        .logo-container img {
+            height: 60px;  /* 로고 높이 증가 */
+            width: auto;   /* 비율 유지를 위해 자동 설정 */
+            object-fit: contain;  /* 이미지 비율 유지 */
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <div class="logo-container">
+            <img src="/images/img4.png" alt="AIVLE Logo">
+        </div>
+        <div class="nav-buttons">
+            <form action="mypage" method="get">
+                <button class="nav-button">마이페이지</button>
+            </form>
+            <form action="logout" method="get">
+                <button class="nav-button">로그아웃</button>
+            </form>
+        </div>
+    </div>
+</header>

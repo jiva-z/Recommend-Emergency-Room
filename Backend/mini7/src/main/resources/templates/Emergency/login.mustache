@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>응급연계 서비스 로그인</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100%;
+        }
+        .left {
+            flex: 1.4;
+            background: url('/images/img2.png') no-repeat center center;
+            background-size: cover;
+        }
+        .right {
+            flex: 0.6;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 40px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            height: 100%;
+        }
+        .logo {
+            margin-bottom: 10px;
+        }
+        .logo img {
+            width: 320px;
+        }
+        h1 {
+            margin: 0 0 10px;
+            font-size: 45px;
+            color: #333;
+            margin-top: 65px;
+        }
+        .form {
+            width: 100%;
+        }
+        .form input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-top:50px;
+        }
+
+        .form input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-top:5px;
+        }
+
+        .form input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-top:50px;
+        }
+
+        .form input.error {
+            border-color: red;
+        }
+        .error-message {
+            display: none;
+            color: red;
+            font-size: 12px;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        }
+        .form button {
+            width: 108%;
+            padding: 15px;
+            background-color: #4A90E2;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            margin-top: 40px;
+            transition: all 0.3s ease;
+        }
+        .form button:hover {
+            background-color: #357ABD;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        .links {
+            font-size: 14px;
+            color: #4A90E2;
+        }
+        .links a {
+            color: #4A90E2;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        hr {
+            width: 108%;
+        }
+        .links2 a {
+            color: brown;
+            font-size: 13px;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        @media (max-width: 768px) {
+            .left {
+                display: none;
+            }
+            .right {
+                flex: 1;
+                padding: 20px;
+            }
+            .container {
+                margin-top: 50px;
+            }
+            h1 {
+                font-size: 30px;
+            }
+            .form input {
+                padding: 10px;
+                font-size: 12px;
+            }
+            .form button {
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
+        /* 모달 팝업 스타일 */
+        .modal {
+            display: none; /* 기본적으로 숨김 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 모달 콘텐츠 스타일 */
+        .modal-content {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        /* 닫기 버튼 스타일 */
+        .close-button {
+            float: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #333;
+        }
+
+    </style>
+</head>
+<body>
+<div class="left"></div>
+<div class="right">
+    <div class="container">
+        <div class="logo">
+            <img src="/images/img3.png" alt="보건복지부 로고">
+        </div>
+        <h1>응급연계 서비스</h1>
+        <form class="form" id="login-form">
+            <input type="text" id="username" placeholder="아이디" required>
+            <span class="error-message" id="username-error">아이디를 입력하세요.</span>
+            <input type="password" id="password" placeholder="비밀번호" required>
+            <span class="error-message" id="password-error">비밀번호를 입력하세요.</span>
+            <button type="submit">로그인</button>
+        </form>
+        <div class="links">
+            <a href="#" class="modal-trigger" data-modal="id-modal">아이디 찾기</a> | <a href="#" class="modal-trigger" data-modal="pwd-modal">비밀번호 찾기</a> | <a href="#" class="modal-trigger" data-modal="join-modal">회원가입</a>
+        </div>
+
+        <!-- 모달 팝업들 -->
+        <div id="id-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>아이디 찾기</h2>
+            </div>
+        </div>
+        <div id="pwd-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>비밀번호 찾기</h2>
+            </div>
+        </div>
+        <div id="join-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>회원가입</h2>
+                <form class="form" id="join-form">
+                    <input type="text" id="join-username" placeholder="아이디" required>
+                    <input type="text" id="password" placeholder="비밀번호" required>
+                    <input type="text" id="name" placeholder="이름" required>
+                    <input type="radio" name="gender" value="male" id="male" />
+                    <label for="male" class="up">남자</label>&nbsp;&nbsp;
+                    <input type="radio" name="gender" value="female" id="female" />
+                    <label for="female" class="up">여자</label>
+                    <br><input type="number" id="age" placeholder="나이" required>
+                    <button>가입하기</button>
+                </form>
+            </div>
+        </div>
+
+
+        <br><br><br>
+        <hr>
+        <br>
+        <div class="links2">
+            <a href="#" class="modal-trigger" data-modal="terms-modal">이용 약관</a>
+            <a href="#" class="modal-trigger" data-modal="privacy-modal">개인정보 처리방침</a>
+            <a href="#" class="modal-trigger" data-modal="policy-modal">운영정책</a>
+            <a href="#" class="modal-trigger" data-modal="support-modal">고객 센터</a>
+            <a href="#" class="modal-trigger" data-modal="notice-modal">공지사항</a>
+        </div>
+
+        <!-- 모달 팝업들 -->
+        <div id="terms-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>이용 약관</h2>
+                <h4>제1조 (목적)</h4>
+                <p>
+                    이 약관은 보건 27팀의 응급 연계 서비스를 이용함에 있어 이용자와 운영기관인 KT AIVLE SCHOOL 간의 권리·의무 및 책임사항과 기타 필요한 사항을 규정함을 목적으로 합니다.
+                </p>
+                <h4>제2조 (약관의 효력과 변경)</h4>
+                <p>
+                    ① 이 약관은 서비스를 이용하고자 하는 모든 이용자에 대하여 그 효력을 발생합니다.<br>
+                    ② 이 약관의 내용은 서비스의 일부 화면 또는 기타 방법 등에 의하여 이를 공지하거나 그 내용을 이용자에게 통지함으로써 효력이 발생됩니다.<br>
+                    ③ 의정원은 필요하다고 인정되는 경우 이 약관의 내용을 변경할 수 있으며, 변경된 약관은 제2항과 같은 방법으로 공지 또는 통지하여 이용자가 직접 확인할 수 있도록 할 것입니다.<br>
+                    ④ 이용자는 변경된 약관에 동의하지 않을 경우 서비스 이용을 중단하고 본인의 회원등록을 취소할 수 있으며, 계속 사용하시는 경우에는 약관 변경에 동의한 것으로 간주되어 변경된 약관은 전항과 같은 방법으로 효력이 발생합니다.<br>
+                    ⑤ 이용자가 이 약관의 내용에 동의하는 경우 의정원의 서비스 제공행위 및 이용자의 서비스 이용행위에는 이 약관이 우선적으로 적용될 것입니다. 이 약관에 명시되지 않은 사항에 대해서는 개인정보보호법, 전기통신기본법, 전기통신사업법, 정보통신윤리위원회심의규정, 정보통신윤리강령, 정보통신망이용촉진 및 정보보호 등에 관한 법률, 전자서명법 등 기타 대한민국의 관련법령, 의정원이 별도로 정한 규정에 의합니다.
+                </p>
+                <h4>제3조 (계약사항의 변경)</h4>
+                <p>
+                    회원은 회원정보관리를 통해 언제든지 자신의 정보를 열람하고 수정할 수 있습니다. 회원은 이용신청 시 기재한 사항이 변경되었을 때에는 수정을 하여야 하며, 수정하지 아니하여 발생하는 문제의 책임은 회원에게 있습니다.
+                </p>
+            </div>
+        </div>
+
+        <div id="privacy-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>개인정보 처리방침</h2>
+                <p>■ 보건복지부는 정보주체의 자유와 권리 보호를 위해 「개인정보 보호법」 및 관계 법령이 정한 바를 준수하여, 적법하게 개인정보를 처리하고 안전하게 관리하고 있습니다.</p>
+                <p>■ 이에 「개인정보 보호법」 제30조에 따라 정보주체에게 개인정보 처리에 관한 절차 및 기준을 안내하고, 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.</p>
+            </div>
+        </div>
+
+        <div id="policy-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>운영정책</h2>
+                <p>■ 사회수요 충족 충분한 의사 수 확보, 진료-연구 및 일-생활 균형 필수의료</p>
+                <p>■ 가까운 곳에서 안심하고 의료를 이용하는 지역완결 필수의료</p>
+                <p>■ 의료사고 시 환자는 충분하고 신속하게 구제, 의료인은 민‧형사 부담 합리화</p>
+                <p>■ 어렵고 위험하고 힘든 필수의료가 충분히 보상받고 사회적 인정</p>
+            </div>
+        </div>
+
+        <div id="support-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>고객 센터</h2>
+                <p>010-xxxx-xxxx</p>
+            </div>
+        </div>
+
+        <div id="notice-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>공지사항</h2>
+                <p>공지사항 내용을 여기에 입력하세요.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+        e.preventDefault(); // 폼 제출 방지
+
+        // 입력 필드와 에러 메시지
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const usernameError = document.getElementById('username-error');
+        const passwordError = document.getElementById('password-error');
+
+        const correctUsername = "admin";
+        const correctPassword = "1234";
+
+        let isValid = true;
+
+        // 아이디 유효성 검사
+        if (username.value.trim() === "") {
+            username.classList.add('error');
+            usernameError.textContent = "아이디를 입력하세요.";
+            usernameError.style.display = 'block';
+            isValid = false;
+        } else {
+            username.classList.remove('error');
+            usernameError.style.display = 'none';
+        }
+
+        // 비밀번호 유효성 검사
+        if (password.value.trim() === "") {
+            password.classList.add('error');
+            passwordError.textContent = "비밀번호를 입력하세요.";
+            passwordError.style.display = 'block';
+            isValid = false;
+        } else {
+            password.classList.remove('error');
+            passwordError.style.display = 'none';
+        }
+
+        if (isValid) {
+            if (username.value !== correctUsername || password.value !== correctPassword) {
+                username.classList.add('error');
+                password.classList.add('error');
+                passwordError.textContent = "아이디 또는 비밀번호가 잘못되었습니다.";
+                passwordError.style.display = 'block';
+            } else {
+                alert('로그인 성공');
+            }
+        }
+    });
+        // 모든 모달 트리거와 모달 닫기 버튼 처리
+        document.addEventListener('DOMContentLoaded', function () {
+        // 모달 트리거 요소 가져오기
+        const triggers = document.querySelectorAll('.modal-trigger');
+        const closeButtons = document.querySelectorAll('.close-button');
+        const modals = document.querySelectorAll('.modal');
+
+        // 모달 열기
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', function (e) {
+                e.preventDefault(); // 기본 링크 동작 방지
+                const modalId = this.dataset.modal; // data-modal 속성 값 가져오기
+                const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.style.display = 'flex';
+        }
+    });
+});
+
+// 모달 닫기
+closeButtons.forEach(button => {
+    button.addEventListener('click', function () {
+        const modal = this.closest('.modal');
+        modal.style.display = 'none';
+    });
+});
+
+// 모달 외부 클릭 시 닫기
+window.addEventListener('click', function (e) {
+    modals.forEach(modal => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
+});
+
+</script>
+</body>
+</html>
