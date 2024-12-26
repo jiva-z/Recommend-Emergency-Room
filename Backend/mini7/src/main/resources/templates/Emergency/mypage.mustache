@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-image {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-image img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+        }
+
+        .info-group {
+            margin-bottom: 15px;
+        }
+
+        .info-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .info-group span {
+            display: block;
+            background: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .button-group button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button-group .edit-btn {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .button-group .edit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .button-group .back-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .button-group .back-btn:hover {
+            background-color: #5a6268;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>내 정보</h1>
+
+    <!-- 프로필 이미지 -->
+    <div class="profile-image">
+        <img src="profile-pic.jpg" alt="프로필 이미지">
+    </div>
+
+    <!-- 사용자 정보 표시 -->
+    <div id="info-view">
+        <div class="info-group">
+            <label for="username">이름</label>
+            <span id="username">홍길동</span>
+        </div>
+        <div class="info-group">
+            <label for="email">이메일</label>
+            <span id="email">hong@example.com</span>
+        </div>
+        <div class="info-group">
+            <label for="phone">연락처</label>
+            <span id="phone">010-1234-5678</span>
+        </div>
+    </div>
+
+    <!-- 정보 수정 폼 -->
+    <div id="edit-form" class="hidden">
+        <div class="info-group">
+            <label for="edit-username">이름</label>
+            <input type="text" id="edit-username" value="홍길동">
+        </div>
+        <div class="info-group">
+            <label for="edit-email">이메일</label>
+            <input type="email" id="edit-email" value="hong@example.com">
+        </div>
+        <div class="info-group">
+            <label for="edit-phone">연락처</label>
+            <input type="text" id="edit-phone" value="010-1234-5678">
+        </div>
+        <button class="edit-btn" onclick="saveInfo()">저장</button>
+
+    </div>
+
+    <!-- 버튼 그룹 -->
+    <div class="button-group">
+        <button class="edit-btn" id="edit-button" onclick="toggleEdit()">정보 수정</button>
+        <button class="back-btn" onclick="history.back()">돌아가기</button>
+    </div>
+</div>
+
+<script>
+    // 정보 수정 모드 토글
+    function toggleEdit() {
+        const infoView = document.getElementById('info-view');
+        const editForm = document.getElementById('edit-form');
+        const editButton = document.getElementById('edit-button');
+
+        if (editForm.classList.contains('hidden')) {
+            infoView.classList.add('hidden');
+            editForm.classList.remove('hidden');
+            editButton.textContent = '취소';
+        } else {
+            infoView.classList.remove('hidden');
+            editForm.classList.add('hidden');
+            editButton.textContent = '정보 수정';
+        }
+    }
+
+    // 정보 저장 기능 (현재는 alert로 대체)
+    function saveInfo() {
+        const username = document.getElementById('edit-username').value;
+        const email = document.getElementById('edit-email').value;
+        const phone = document.getElementById('edit-phone').value;
+
+        alert(`저장된 정보:\n이름: ${username}\n이메일: ${email}\n연락처: ${phone}`);
+
+        // 저장 후 보기 모드로 전환
+        toggleEdit();
+
+        // 업데이트된 정보 표시
+        document.getElementById('username').textContent = username;
+        document.getElementById('email').textContent = email;
+        document.getElementById('phone').textContent = phone;
+    }
+</script>
+</body>
+</html>

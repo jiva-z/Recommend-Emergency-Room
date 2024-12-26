@@ -5,90 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>응급 상황 설명</title>
     <style>
+        :root {
+            --primary-blue: #005baa;
+            --secondary-blue: #0056b3;
+            --white: #ffffff;
+            --gray-light: #f8f9fa;
+            --border-color: #e1e4e8;
+        }
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #f4f4f4;
-            font-size: 18px; /* 기본 글자 크기 추가 확대 */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--white);
         }
-        header {
+        /* 상단 배경 컨테이너 추가 */
+        .background-container {
+            background-color: var(--primary-blue);
             width: 100%;
-            background-color: #ffffff;
-            padding: 30px 20px; /* 헤더 패딩 확대 */
-            border-bottom: 1px solid #ccc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            margin-right: 40px;
-        }
-        header img {
-            height: 70px; /* 이미지 크기 추가 확대 */
-        }
-        .header-buttons {
             position: absolute;
-            top: 60px;
-            right: 20px;
-            display: flex;
-            gap: 20px; /* 버튼 간격 확대 */
-            align-items: center;
+            top: 0;
+            left: 0;
+            height: 300px;  /* 파란색 배경 높이 */
+            z-index: -1;
         }
-        .header-buttons button {
-            background-color: transparent;
-            color: #333;
-            font-size: 20px; /* 버튼 글자 크기 추가 확대 */
-            padding: 15px 25px; /* 버튼 패딩 확대 */
-            border: 1px solid #ccc;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+
+        .main-visual {
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 0;
+            background: transparent;  /* 그라데이션 제거 */
         }
-        .header-buttons button:hover {
-            background-color: #f0f0f0;
-            color: #000;
-        }
-        .search-bar {
-            display: flex;
-            align-items: center;
-            border: 1px solid #ccc;
-            border-radius: 25px;
-            padding: 10px 20px; /* 검색바 패딩 확대 */
-            background-color: #fff;
-            gap: 15px; /* 검색창 내부 간격 확대 */
-        }
-        .search-bar input {
-            border: none;
-            outline: none;
-            width: 240px; /* 검색창 너비 확대 */
-            font-size: 20px; /* 검색창 글자 크기 추가 확대 */
-        }
-        .search-bar button {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-        .search-bar button img {
-            width: 24px;
-            height: 24px; /* 아이콘 크기 확대 */
-        }
-        .header-left img {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            width: 350px; /* 이미지 크기 추가 확대 */
-            height: auto;
-        }
-        .header-center img {
-            width: 350px; /* 이미지 크기 추가 확대 */
-            height: auto;
-            display: block;
-            margin: 0 auto;
+
+        .main-visual h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
         main {
             width: 70%;
@@ -140,7 +91,6 @@
         button {
             background-color: #0056b3;
             color: #ffffff;
-            font-size: 22px;
             padding: 15px 30px;
             border: none;
             border-radius: 8px;
@@ -152,68 +102,68 @@
             background-color: #003d80;
         }
         /* 테이블 전체 스타일 */
-table {
-    width: 100%;
-    border-collapse: separate;  /* 테두리 분리 */
-    border-spacing: 0;         /* 셀 간격 제거 */
-    margin: 20px 0;
-    border-radius: 8px;        /* 테이블 모서리 둥글게 */
-    overflow: hidden;          /* 둥근 모서리 유지 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* 그림자 효과 */
-}
+        table {
+            width: 100%;
+            border-collapse: separate;  /* 테두리 분리 */
+            border-spacing: 0;         /* 셀 간격 제거 */
+            margin: 20px 0;
+            border-radius: 8px;        /* 테이블 모서리 둥글게 */
+            overflow: hidden;          /* 둥근 모서리 유지 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* 그림자 효과 */
+        }
 
-/* 테이블 헤더 스타일 */
-th {
-    background-color: #4285f4;  /* 구글 블루 색상 */
-    color: white;
-    padding: 15px;
-    font-weight: 500;
-    text-align: left;
-    font-size: 14px;
-    letter-spacing: 0.5px;
-}
+        /* 테이블 헤더 스타일 */
+        th {
+            background-color: #4285f4;  /* 구글 블루 색상 */
+            color: white;
+            padding: 15px;
+            font-weight: 500;
+            text-align: left;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
 
-/* 테이블 데이터 셀 스타일 */
-td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #e0e0e0;  /* 연한 구분선 */
-    font-size: 14px;
-    color: #333;
-}
+        /* 테이블 데이터 셀 스타일 */
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;  /* 연한 구분선 */
+            font-size: 14px;
+            color: #333;
+        }
 
-/* 테이블 행 호버 효과 */
-tr:hover td {
-    background-color: #f5f9ff;  /* 연한 블루 배경 */
-    transition: background-color 0.3s ease;
-}
+        /* 테이블 행 호버 효과 */
+        tr:hover td {
+            background-color: #f5f9ff;  /* 연한 블루 배경 */
+            transition: background-color 0.3s ease;
+        }
 
-/* 마지막 행의 테두리 제거 */
-tr:last-child td {
-    border-bottom: none;
-}
+        /* 마지막 행의 테두리 제거 */
+        tr:last-child td {
+            border-bottom: none;
+        }
 
-/* 짝수 행 배경색 */
-tr:nth-child(even) {
-    background-color: #f8f9fa;
-}
+        /* 짝수 행 배경색 */
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
 
-/* 첫 번째 열 (병원 이름) 강조 */
-td:first-child {
-    font-weight: 500;
-    color: #1a73e8;  /* 구글 블루 계열 */
-}
+        /* 첫 번째 열 (병원 이름) 강조 */
+        td:first-child {
+            font-weight: 500;
+            color: #1a73e8;  /* 구글 블루 계열 */
+        }
 
-/* 거리와 소요시간 열 정렬 */
-td:nth-child(4),
-td:nth-child(5) {
-    text-align: center;
-}
+        /* 거리와 소요시간 열 정렬 */
+        td:nth-child(4),
+        td:nth-child(5) {
+            text-align: center;
+        }
 
-/* 도착예정시각 열 스타일 */
-td:last-child {
-    color: #666;
-    font-size: 13px;
-}
+        /* 도착예정시각 열 스타일 */
+        td:last-child {
+            color: #666;
+            font-size: 13px;
+        }
 
         footer {
             width: 100%;
@@ -272,262 +222,198 @@ td:last-child {
             cursor: pointer;
             color: #333;
         }
+
         .hamburger-button {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 1001;
-    display: none; /* 기본적으로 숨김, 모바일에서만 보이게 설정 */
-}
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+            display: none; /* 기본적으로 숨김, 모바일에서만 보이게 설정 */
+        }
 
-.mobile-menu {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 300px;
-    height: 100%;
-    background-color: #ffffff;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding: 20px;
-    transition: right 0.3s ease;
-    z-index: 1000;
-}
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 300px;
+            height: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 20px;
+            transition: right 0.3s ease;
+            z-index: 1000;
+        }
 
-.mobile-menu.open {
-    right: 0;
-}
+        .mobile-menu.open {
+            right: 0;
+        }
 
-.mobile-menu-content button {
-    background: none;
-    color: #333;
-    font-size: 18px;
-    padding: 10px 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    width: 100%;
-}
+        .mobile-menu-content button {
+            background: none;
+            color: #333;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
 
-.mobile-menu-content .search-bar {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    padding: 10px 15px;
-    margin-bottom: 20px;
-    background-color: #fff;
-}
+        .mobile-menu-content .search-bar {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
 
-.mobile-menu-content .search-bar input {
-    border: none;
-    outline: none;
-    width: 100%;
-    font-size: 16px;
-}
+        .mobile-menu-content .search-bar input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 16px;
+        }
 
-.mobile-menu-content .search-bar button img {
-    width: 20px;
-    height: 20px;
-}
+        .mobile-menu-content .search-bar button img {
+            width: 20px;
+            height: 20px;
+        }
 
-.close-menu {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    align-self: flex-end;
-    margin-bottom: 20px;
-}
+        .close-menu {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            align-self: flex-end;
+            margin-bottom: 20px;
+        }
 
-        @media (max-width: 1200px) {
-    body {
-        font-size: 16px; /* 글자 크기 축소 */
-    }
-    header img {
-        height: 60px; /* 헤더 이미지 크기 축소 */
-    }
-    .header-buttons {
-        top: 40px;
-        gap: 15px; /* 버튼 간격 축소 */
-    }
-    .search-bar input {
-        width: 200px; /* 검색창 너비 축소 */
-        font-size: 18px;
-    }
-    .header-center img {
-        width: 300px; /* 중앙 이미지 크기 축소 */
-    }
-    main {
-        width: 80%; /* 메인 너비 축소 */
-        padding: 20px; /* 패딩 축소 */
-    }
-    button {
-        font-size: 20px;
-        padding: 12px 25px;
-    }
-    table th, table td {
-        padding: 8px; /* 테이블 셀 패딩 축소 */
-    }
-    .hamburger-button {
-        display: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .form-row {
-        flex-direction: column; /* 세로 배치 */
-        gap: 10px; /* 요소 간 간격 조정 */
-    }
-    header {
-        padding: 15px 10px;
-        flex-direction: column;
-        align-items: flex-start;
-        display: none;
-    }
-    .hamburger-button {
-        display: block;
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        z-index: 1000;
-        border: none;
-        cursor: pointer; /* 커서 모양 변경 */
-    }
-    .hamburger-icon {
-    width: 30px; /* 버튼 크기 */
-    height: auto; /* 비율 유지 */
-}
-    .header-left img {
-        width: 200px; /* 로고 크기 축소 */
-    }
-    .header-buttons {
-        top: auto;
-        right: auto;
-        flex-direction: column; /* 버튼 세로 정렬 */
-        gap: 10px;
-    }
-    .search-bar {
-        width: 100%; /* 검색창 너비를 100%로 조정 */
-        padding: 10px;
-        gap: 10px;
-    }
-    .search-bar input {
-        width: 100%; /* 입력 필드를 부모 너비에 맞춤 */
-        font-size: 14px;
-    }
-    .header-center img {
-        width: 150px; /* 이미지 크기 축소 */
-        margin-top: 10px;
+    @media (max-width: 1200px) {
+        body {
+            font-size: 16px; /* 글자 크기 축소 */
+        }
+        main {
+            width: 80%; /* 메인 너비 축소 */
+            padding: 20px; /* 패딩 축소 */
+        }
+        table th, table td {
+            padding: 8px; /* 테이블 셀 패딩 축소 */
+        }
+        .hamburger-button {
+            display: none;
+        }
     }
 
-    main {
-        width: 95%; /* 메인 컨텐츠 너비 조정 */
-        padding: 15px;
+    @media (max-width: 480px) {
+        .form-row {
+            flex-direction: column; /* 세로 배치 */
+            gap: 10px; /* 요소 간 간격 조정 */
+        }
+        .hamburger-button {
+            display: block;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            border: none;
+            cursor: pointer; /* 커서 모양 변경 */
+        }
+        .hamburger-icon {
+            width: 30px; /* 버튼 크기 */
+            height: auto; /* 비율 유지 */
+        }
+        main {
+            width: 95%; /* 메인 컨텐츠 너비 조정 */
+            padding: 15px;
+        }
+        h2 {
+            font-size: 20px; /* 제목 크기 축소 */
+        }
+        .form-group label {
+            font-size: 16px; /* 라벨 크기 축소 */
+        }
+        .form-group input {
+            font-size: 14px; /* 입력 필드 글자 크기 축소 */
+            padding: 10px;
+            width: 80%;
+        }
+        table {
+            font-size: 12px; /* 테이블 글자 크기 축소 */
+        }
+        table th, table td {
+            padding: 8px; /* 셀 패딩 축소 */
+        }
+        table {
+            overflow-x: auto; /* 테이블 스크롤 추가 */
+            display: block;
+        }
+        .modal-content {
+            width: 90%; /* 모달 너비 축소 */
+            padding: 15px;
+        }
     }
-    h2 {
-        font-size: 20px; /* 제목 크기 축소 */
-    }
-    .form-group label {
-        font-size: 16px; /* 라벨 크기 축소 */
-    }
-    .form-group input {
-        font-size: 14px; /* 입력 필드 글자 크기 축소 */
-        padding: 10px;
-        width: 80%;
-    }
-    button {
-        font-size: 16px; /* 버튼 크기 축소 */
-        padding: 10px 20px;
-    }
-    table {
-        font-size: 12px; /* 테이블 글자 크기 축소 */
-    }
-    table th, table td {
-        padding: 8px; /* 셀 패딩 축소 */
-    }
-    table {
-        overflow-x: auto; /* 테이블 스크롤 추가 */
-        display: block;
-    }
-    .modal-content {
-        width: 90%; /* 모달 너비 축소 */
-        padding: 15px;
-    }
-}
 
-/* 768px 이하 (태블릿 화면) */
-@media (max-width: 768px) {
-    .form-row {
-        flex-direction: column; /* 세로 배치 */
-        gap: 10px; /* 요소 간 간격 조정 */
+    /* 768px 이하 (태블릿 화면) */
+    @media (max-width: 768px) {
+        .form-row {
+            flex-direction: column; /* 세로 배치 */
+            gap: 10px; /* 요소 간 간격 조정 */
+        }
+        .hamburger-button {
+            display: block;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            border: none;
+            cursor: pointer; /* 커서 모양 변경 */
+        }
+        .hamburger-icon {
+            width: 30px;
+            height: auto;
+            position: fixed;
+            top: 50px;
+            right: 30px;
+        }
+        main {
+            width: 90%;
+        }
+        h2 {
+            font-size: 22px;
+        }
+        .form-group label {
+            font-size: 18px;
+        }
+        .form-group input {
+            font-size: 14px; /* 입력 필드 글자 크기 축소 */
+            padding: 10px;
+            width: 80%;
+        }
+        button {
+            font-size: 18px;
+            padding: 12px 25px;
+        }
+        table th, table td {
+            font-size: 14px;
+            padding: 10px;
+        }
+        .modal-content {
+            width: 80%;
+            padding: 20px;
+        }
     }
-    header {
-        padding: 20px 10px;
-        display: none;
-    }
-    .hamburger-button {
-        display: block;
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        z-index: 1000;
-        border: none;
-        cursor: pointer; /* 커서 모양 변경 */
-    }
-    .hamburger-icon {
-        width: 30px;
-        height: auto;
-        position: fixed;
-        top: 50px;
-        right: 30px;
-    }
-    .header-left img {
-        width: 250px;
-    }
-    .header-center img {
-        width: 200px;
-    }
-    .search-bar input {
-        width: 100%;
-        font-size: 16px;
-    }
-    main {
-        width: 90%;
-    }
-    h2 {
-        font-size: 22px;
-    }
-    .form-group label {
-        font-size: 18px;
-    }
-    .form-group input {
-        font-size: 14px; /* 입력 필드 글자 크기 축소 */
-        padding: 10px;
-        width: 80%;
-    }
-    button {
-        font-size: 18px;
-        padding: 12px 25px;
-    }
-    table th, table td {
-        font-size: 14px;
-        padding: 10px;
-    }
-    .modal-content {
-        width: 80%;
-        padding: 20px;
-    }
-}
 
 /* 프로필 섹션 스타일 */
 .profile-section {
@@ -608,25 +494,12 @@ td:last-child {
             <button onclick="location.href='login3.html'">로그아웃</button>
         </div>
     </div>
-    <header>
-        <div class="header-left">
-            <img src="/images/img4.png" alt="Slogan Image">
-        </div>
-        <div class="header-center">
-            <img src="/images/img3.png" alt="KakaoTalk Image">
-        </div>
-        <div class="header-buttons">
-            <div class="search-bar">
-                <input type="text" placeholder="검색어를 입력하세요">
-                <button>
-                    <img src="/images/img5.png" alt="검색 아이콘">
-                </button>
-            </div>
-
-            <button onclick="location.href='mypage.html'">마이 페이지</button>
-            <button onclick="location.href='login3.html'">로그아웃</button>
-        </div>
-    </header>
+    <div class="background-container"></div>
+    {{>layouts/header}}
+    <div class="main-visual">
+        <h1>응급실 찾기 결과</h1>
+        <p>가장 가까운 응급실을 빠르게 찾아드립니다</p>
+    </div>
     <main>
         <div class="form-group">
             <label for="summary">상황 메시지 요약</label>
