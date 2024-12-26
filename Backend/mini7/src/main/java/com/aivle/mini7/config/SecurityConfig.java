@@ -57,7 +57,7 @@ public class SecurityConfig {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 관리 비활성화
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/login", "/auth/register").permitAll() // 인증 없이 접근 가능한 엔드포인트
+                        .requestMatchers("/auth/login", "/auth/register",  "/", "/login", "/images/**", "/css/**", "/js/**").permitAll() // 인증 없이 접근 가능한 엔드포인트
                         .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
                 )
                 .exceptionHandling(exceptionHandling ->
