@@ -4,6 +4,7 @@ import com.aivle.mini7.client.dto.LoginResponse;
 import com.aivle.mini7.client.dto.RegisterRequest;
 import com.aivle.mini7.entity.User;
 import com.aivle.mini7.repository.UserRepository;
+import com.aivle.mini7.util.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
     public void registerUser(RegisterRequest request) {
@@ -48,7 +51,10 @@ public class UserService {
             throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
 
-        return new LoginResponse("로그인 성공");
+        // JWT 토큰 생성
+        String token = jwtUtil.generateToken(user.getUserId());
+
+        return new LoginResponse("로그인 성공", token);
     }
 
 }

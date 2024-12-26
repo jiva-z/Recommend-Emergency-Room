@@ -16,15 +16,21 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    // 모든 사용자 조회
+    // 모든 사용자 조회 (보호되지 않은 엔드포인트 - 인증 불필요)
     @GetMapping
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    // 사용자 생성
+    // 사용자 생성 (보호되지 않은 엔드포인트 - 인증 불필요)
     @PostMapping
     public User createUser(@RequestBody User user) {
         return userRepository.save(user);
+    }
+
+    // 보호된 엔드포인트 - JWT 인증 필요
+    @GetMapping("/protected")
+    public String protectedEndpoint() {
+        return "이 데이터는 인증된 사용자만 볼 수 있습니다.";
     }
 }
